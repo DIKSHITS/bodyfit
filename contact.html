@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="css/rangeslider.css">
 
     <link rel="stylesheet" href="css/style.css">
-    </head>
+</head>
 <body>
 
 <div class="site-wrap">
@@ -81,7 +81,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7 mb-5" data-aos="fade">
-                    <form action="https://api.web3forms.com/submit" method="POST" class="p-5 bg-white" style="margin-top: -50px;">
+                    <!-- Added id="contactForm" -->
+                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" class="p-5 bg-white" style="margin-top: -50px;">
 
                         <input type="hidden" name="access_key" value="13523eb1-ee66-41d1-ba65-a77db9d91e7e">
 
@@ -202,9 +203,9 @@
                         </div>
                         <div class="col-md-6 mb-5 mb-lg-0 col-lg-3">
                             <h2 class="footer-heading mb-4">Follow Us</h2>
-                                         <a href="https://www.facebook.com/megha079" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                <a href="https://wa.me/918210312891" class="pl-3 pr-3"><span class="icon-whatsapp"></span></a>
-                <a href="https://www.instagram.com/fitlife_by_medha?igsh=bDVpb2JjMnI1dDJp" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+                            <a href="https://www.facebook.com/megha079" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                            <a href="https://wa.me/918210312891" class="pl-3 pr-3"><span class="icon-whatsapp"></span></a>
+                            <a href="https://www.instagram.com/fitlife_by_medha?igsh=bDVpb2JjMnI1dDJp" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
                         </div>
                     </div>
                 </div>
@@ -241,7 +242,6 @@
 <script src="js/jquery.magnific-popup.min.js"></script>
 <script src="js/jquery.animateNumber.min.js"></script>
 <script src="js/jquery.waypoints.min.js"></script>
-
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/aos.js"></script>
 <script src="js/rangeslider.min.js"></script>
@@ -259,7 +259,34 @@
     });
 </script>
 
-<script src="js/main.js"></script>
+<!-- ✅ Added Script for Refresh After Submit -->
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+    let form = this;
 
+    fetch(form.action, {
+        method: form.method,
+        body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if(result.success) {
+            alert("Message sent successfully!");
+            form.reset();
+            setTimeout(() => {
+                window.location.reload(); // Refresh page after success
+            }, 1000);
+        } else {
+            alert("Something went wrong. Please try again.");
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error);
+    });
+});
+</script>
+
+<script src="js/main.js"></script>
 </body>
 </html>
